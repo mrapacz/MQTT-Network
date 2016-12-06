@@ -1,10 +1,6 @@
 from dumper_setup import Probe
 
 
-def dump_data():
-    p = Probe(node_id=123123, temperature=20.0)
+def dump_data(node_id, temperature):
+    p = Probe(node_id=node_id, temperature=temperature)
     p.save()
-
-
-if __name__ == '__main__':
-    dump_data()
