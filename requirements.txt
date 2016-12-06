@@ -1,0 +1,4 @@
+Django==1.10.4
+paho-mqtt==1.2
+psycopg2==2.6.2
+RPi.GPIO==0.6.3
