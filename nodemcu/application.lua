@@ -6,8 +6,8 @@ m = nil
 -- Sends json object containing temperature to server
 local function send_data()  
     temp = temperature.get_temperature()
-    message = "{id:" .. config.ID .. 
-            ", temperature:" .. temp .. 
+    message = "{\"id\":" .. config.ID .. 
+            ", \"temperature\":" .. temp .. 
              "}"
     print(message)
     m:publish(config.ENDPOINT .. config.ID, message, 0, 0)
