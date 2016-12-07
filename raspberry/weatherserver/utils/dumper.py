@@ -1,4 +1,4 @@
-from dumper_setup import Probe
+from weatherserver.utils.dumper_setup import Probe
 
 
 def dump_data(node_id, temperature):
