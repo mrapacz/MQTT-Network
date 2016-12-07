@@ -1,7 +1,7 @@
 import paho.mqtt.client as mqtt
 import config
 import json
-
+from weatherserver.utils.dumper import dump_data
 
 # The callback for when the client receives a CONNACK response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -10,17 +10,15 @@ def on_connect(client, userdata, flags, rc):
         client.subscribe("nodemcu/" + node)
 
 
-#
-# def dump_message(message):
-#     pass
 
 # The callback for when a PUBLISH message is received from the server.
 def on_message(client, userdata, msg):
-    # print(msg.topic + " " + str(msg.payload))
     message = msg.payload.decode()
     print(message)
-    # dump_message(message)
-
+    json_msg = json.loads(message)
+    print(json_msg)
+    dump_data(json_msg['id'], json_msg['temperature'])
+    
 
 if __name__ == '__main__':
     client = mqtt.Client()
