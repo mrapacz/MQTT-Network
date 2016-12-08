@@ -27,7 +27,7 @@ SECRET_KEY = '(mq^7y(+((@^w6=5z(5*%445^k5)ueoc45e4sg9)hg*csi)#&e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['0.0.0.0']
 
 # Application definition
 
