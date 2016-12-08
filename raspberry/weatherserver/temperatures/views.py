@@ -4,5 +4,5 @@ from temperatures.models import Probe
 
 
 def index(request):
-    probes = Probe.objects.order_by('-timestamp')
+    probes = "\n".join(str(x) for x in Probe.objects.order_by('-timestamp'))
     return HttpResponse(probes)
