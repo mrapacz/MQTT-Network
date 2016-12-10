@@ -8,16 +8,20 @@
 <body>
 
 <h1> Temperatures</h1>
-
+Last measured:
+<ul>
+    <li>{{ last_measured.temperature }}</li>
+    <li>{{ last_measured.timestamp }}</li>
+</ul>
 {% block content %}
     <div id="container">Chart</div>
 {% endblock %}
-</body>
-</html>
-
 
 {#<ul>#}
 {#    {% for probe in probes %}#}
 {#        <li>{{ probe }}</li>#}
 {#    {% endfor %}#}
 {#</ul>#}
+</body>
+</html>
+

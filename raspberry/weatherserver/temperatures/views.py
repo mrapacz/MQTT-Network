@@ -46,5 +46,6 @@ def index(request):
         },
         x_sortf_mapf_mts=(None, tzoriented_date, False)
     )
-    probes = Probe.objects.order_by('-timestamp')
-    return render(request, 'temperatures/index.html', {'probes': probes, 'chart': cht})
+    last_measured = Probe.objects.order_by('-timestamp')[0]
+
+    return render(request, 'temperatures/index.html', {'last_measured': last_measured, 'chart': cht})
