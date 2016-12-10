@@ -1,15 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-    <meta charset="UTF-8">
     <title>Temperature index</title>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    {% load chartit %}
+    {{ chart|load_charts:"container" }}
 </head>
 <body>
+
 <h1> Temperatures</h1>
-<ul>
-    {% for probe in probes %}
-        <li>{{ probe }}</li>
-    {% endfor %}
-</ul>
+
+{% block content %}
+    <div id="container">Chart</div>
+{% endblock %}
 </body>
 </html>
+
+
+{#<ul>#}
+{#    {% for probe in probes %}#}
+{#        <li>{{ probe }}</li>#}
+{#    {% endfor %}#}
+{#</ul>#}

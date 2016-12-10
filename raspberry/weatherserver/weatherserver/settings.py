@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # 'jquery',  # for chartit app
+    # 'highcharts',  # for chartit app
+    'chartit',
     'temperatures',
 ]
 
