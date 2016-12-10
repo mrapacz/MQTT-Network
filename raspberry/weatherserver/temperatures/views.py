@@ -42,10 +42,16 @@ def index(request):
         chart_options=
         {
             'title': {'text': 'Temperature chart'},
-            'xAxis': {'title': {'text': 'Time'}}
+            'xAxis': {'title': {'text': 'Time'}},
+            # -*- coding: utf-8 -*-
+            'yAxis': {'title': {'text': 'Temperature (°C)'}}
+
         },
         x_sortf_mapf_mts=(None, tz_oriented_date, False)
     )
-    last_measured = Probe.objects.order_by('-timestamp')[0]
-
-    return render(request, 'temperatures/index.html', {'last_measured': last_measured, 'chart': cht})
+    # -*- coding: utf-8 -*-
+    last_probe = Probe.objects.order_by('-timestamp')[0]
+    last_measured = str(last_probe.temperature) + "°C"
+    last_date = tz_oriented_date(last_probe.timestamp)
+    return render(request, 'temperatures/index.html',
+                  {'last_measured': last_measured, 'last_date': last_date, 'chart': cht})

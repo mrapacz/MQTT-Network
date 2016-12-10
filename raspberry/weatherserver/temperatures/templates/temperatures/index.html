@@ -20,15 +20,12 @@
 <body>
 
 <h1> Temperatures</h1>
-Last measured:
-<ul>
-    <li>{{ last_measured.temperature }}</li>
-    <li>{{ last_measured.timestamp }}</li>
-</ul>
+
 {% block content %}
     <div id="container">Chart</div>
 {% endblock %}
-
+<h2>Last update:</h2>
+<h3>{{ last_measured }} measured at {{ last_date }}</h3>
 {#<ul>#}
 {#    {% for probe in probes %}#}
 {#        <li>{{ probe }}</li>#}
