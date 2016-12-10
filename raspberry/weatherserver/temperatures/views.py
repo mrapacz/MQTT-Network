@@ -5,6 +5,14 @@ from django.shortcuts import render
 from django.utils import timezone
 
 from temperatures.models import Probe
+from weatherserver import settings
+import pytz
+
+
+def tzoriented_date(date):
+    DATE_FORMAT = "%H:%M, %d %b"
+    converted_date = date.astimezone(pytz.timezone(settings.TIME_ZONE))
+    return datetime.strftime(converted_date, DATE_FORMAT)
 
 
 def index(request):
@@ -36,7 +44,7 @@ def index(request):
             'title': {'text': 'Temperature chart'},
             'xAxis': {'title': {'text': 'Time'}}
         },
-        x_sortf_mapf_mts=(None, lambda timestamp: datetime.strftime(timestamp, "%Y-%m-%d %H:%M:%S"), False)
+        x_sortf_mapf_mts=(None, tzoriented_date, False)
     )
     probes = Probe.objects.order_by('-timestamp')
     return render(request, 'temperatures/index.html', {'probes': probes, 'chart': cht})
