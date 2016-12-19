@@ -16,11 +16,11 @@ def tz_oriented_date(date):
 
 
 def index(request):
-    print(timezone.now())
+    recent_probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1))
     ds = DataPool(
         series=
         [{
-            'options': {'source': Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1))},
+            'options': {'source': recent_probes},
             'terms':
                 [
                     'timestamp',
@@ -49,6 +49,7 @@ def index(request):
         },
         x_sortf_mapf_mts=(None, tz_oriented_date, False)
     )
+    
     # -*- coding: utf-8 -*-
     last_probe = Probe.objects.order_by('-timestamp')[0]
     last_measured = str(last_probe.temperature) + "°C"
