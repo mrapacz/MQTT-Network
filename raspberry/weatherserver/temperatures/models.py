@@ -9,4 +9,4 @@ class Probe(models.Model):
     timestamp = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
-        return " ".join((str(x) for x in [self.temperature, self.timestamp, self.node_id, ]))
+        return "{} {} {}".format(self.temperature, self.timestamp, self.node_id)

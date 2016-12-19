@@ -1,8 +1,11 @@
+<!DOCTYPE html>
+
 {% load static %}
 {% load chartit %}
 
+<html lang="en">
 <head>
-
+    <meta charset="UTF-8">
     <title>Temperature index</title>
     <style type="text/css">body {
         margin: 40px auto;
@@ -21,19 +24,14 @@
     {{ chart|load_charts:"container" }}
 </head>
 <body>
+    <h1>Temperatures</h1>
 
-<h1> Temperatures</h1>
+    {% block content %}
+        <div id="container">Chart</div>
+    {% endblock %}
 
-{% block content %}
-    <div id="container">Chart</div>
-{% endblock %}
-<h2>Last update:</h2>
-<h3>{{ last_measured }} measured at {{ last_date }}</h3>
-{#<ul>#}
-{#    {% for probe in probes %}#}
-{#        <li>{{ probe }}</li>#}
-{#    {% endfor %}#}
-{#</ul>#}
+    <h2>Last update:</h2>
+    <h3>{{ last_measured }} measured at {{ last_date }}</h3>
 </body>
 </html>
 

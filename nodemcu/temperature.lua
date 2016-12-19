@@ -6,9 +6,10 @@ function module.set_temp()
 end
 
 function module.get_temperature()
-    
-    temp = t.read()
-    while(temp == 85) do
+    local ERROR = 85 -- a constant symbolizing an error during measurement of temperature
+
+    temp = ERROR
+    while(temp == ERROR) do
         temp = t.read()
     end
     return temp
