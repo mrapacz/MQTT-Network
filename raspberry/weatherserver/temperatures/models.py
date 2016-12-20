@@ -7,3 +7,6 @@ class Probe(models.Model):
     node_id = models.IntegerField()
     temperature = models.FloatField()
     timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return "{} {} {}".format(self.temperature, self.timestamp, self.node_id)

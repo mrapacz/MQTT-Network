@@ -11,6 +11,7 @@ local function send_data()
              "}"
     print(message)
     m:publish(config.ENDPOINT .. config.ID, message, 0, 0)
+    node.dsleep(10 * 1000000)
 end
 
 -- Subscribe to server on own chipid
@@ -26,7 +27,6 @@ local function mqtt_start()
     m:on("message", function(conn, topic, data) 
       if data ~= nil then
         print(topic .. ": " .. data)
-        -- do something, we have received a message
       end
     end)
     -- register connect callbackr
@@ -35,9 +35,9 @@ local function mqtt_start()
         register_myself()
         
         tmr.stop(6)
-        tmr.alarm(6, 10000, 1, send_data)
+        --tmr.alarm(6, 10000, 1, send_data)
+        send_data()
     end) 
-
 end
 
 function module.start() 

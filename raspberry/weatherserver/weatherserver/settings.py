@@ -27,7 +27,10 @@ SECRET_KEY = '(mq^7y(+((@^w6=5z(5*%445^k5)ueoc45e4sg9)hg*csi)#&e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['0.0.0.0', '192.168.1.254', '192.168.43.254']
+ALLOWED_HOSTS = ['127.0.0.1',
+                 '0.0.0.0',
+                 '192.168.1.254',
+                 '192.168.43.254', ]
 
 # Application definition
 
@@ -38,8 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'temperatures' if __name__ == 'weatherserver.settings' else 'weatherserver.temperatures'
-    'temperatures'
+    'chartit',
+    'temperatures',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'CET'
+TIME_ZONE = 'Europe/Warsaw'
 
 USE_I18N = True
 
@@ -121,3 +124,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+STATICFILES_DIRS = (
+    BASE_DIR + "/static",
+)

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+{% load static %}
+{% load chartit %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Temperature index</title>
+    <style type="text/css">body {
+        margin: 40px auto;
+        max-width: 650px;
+        line-height: 1.6;
+        font-size: 18px;
+        color: #444;
+        padding: 0 10px
+    }
+
+    h1, h2, h3 {
+        line-height: 1.2
+    }</style>
+    <script src="{% static "jquery.js" %}"></script>
+    <script src="{% static "highcharts.js" %}"></script>
+    {{ chart|load_charts:"container" }}
+</head>
+<body>
+    <h1>Temperatures</h1>
+
+    {% block content %}
+        <div id="container">Chart</div>
+    {% endblock %}
+
+    <h2>Last update:</h2>
+    <h3>{{ last_measured }} measured at {{ last_date }}</h3>
+</body>
+</html>
+
