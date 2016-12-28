@@ -11,7 +11,10 @@ local function send_data()
              "}"
     print(message)
     m:publish(config.ENDPOINT .. config.ID, message, 0, 0)
-    node.dsleep(10 * 1000000)
+    tmr.alarm(6, 50, 0, function()
+        tmr.stop(6)
+        node.dsleep(config.SLEEPTIME)
+    end)
 end
 
 -- Subscribe to server on own chipid
