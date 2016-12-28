@@ -15,18 +15,27 @@ def tz_oriented_date(date):
     return datetime.strftime(converted_date, DATE_FORMAT)
 
 
+def get_recent_probes(node_id):
+    print("ID IZ")
+    print(node_id)
+    probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1), node_id=node_id)
+    for probe in probes:
+        print(probe)
+    return probes
+
+
 def index(request):
-    recent_probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1))
+    nodes = list(Probe.objects.values_list('node_id').distinct())
+
     ds = DataPool(
-        series=
-        [{
-            'options': {'source': recent_probes},
-            'terms':
-                [
-                    'timestamp',
-                    'temperature',
-                ]
-        }])
+        series=[{
+                    'options': {'source': get_recent_probes(node_id)},
+                    'terms':
+                        [
+                            {'timestamp - ' + str(node_id): 'timestamp'},
+                            {'temperature - ' + str(node_id): 'temperature'},
+                        ]
+                } for (node_id,) in nodes])
 
     cht = Chart(
         datasource=ds,
@@ -35,9 +44,9 @@ def index(request):
             'options':
                 {
                     'type': 'line',
-                    'stacking': False,
+                    'stacking': True,
                 },
-            'terms': {'timestamp': ['temperature', ]}
+            'terms': {'timestamp - ' + str(node_id): ['temperature - ' + str(node_id)] for (node_id,) in nodes}
         }],
         chart_options=
         {
