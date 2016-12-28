@@ -18,7 +18,7 @@ def tz_oriented_date(date):
 def get_recent_probes(node_id):
     print("ID IZ")
     print(node_id)
-    probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1), node_id=node_id)
+    probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1,), node_id=node_id)
     for probe in probes:
         print(probe)
     return probes
@@ -44,7 +44,7 @@ def index(request):
             'options':
                 {
                     'type': 'line',
-                    'stacking': True,
+                    'stacking': False,
                 },
             'terms': {'timestamp - ' + str(node_id): ['temperature - ' + str(node_id)] for (node_id,) in nodes}
         }],
