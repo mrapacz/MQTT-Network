@@ -72,15 +72,6 @@ def index(request):
                     'type': 'line',
                     'stacking': False,
                     # 'dashStyle': 'longdash'
-                    'zones': [{
-                        'value': 19.5,
-                        'color': '#f7a35c'
-                    }, {
-                        'value': 19.6,
-                        'color': '#7cb5ec'
-                    }, {
-                        'color': '#90ed7d'
-                    }]
                 },
             'terms': {'timestamp - ' + str(node_id): ['temperature - ' + str(node_id)] for (node_id,) in nodes}
         }],
