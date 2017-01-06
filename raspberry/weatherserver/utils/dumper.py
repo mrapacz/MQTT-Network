@@ -11,7 +11,7 @@ def dump_data(node_id, temperature):
 
     try:
         p = Probe.objects.get(timestamp=time, node_id=node_id)
-        p.temperature = mean(temperature, p.temperature)
+        p.temperature = mean([temperature, p.temperature])
         p.save()
     except Probe.DoesNotExist:
         p = Probe(node_id=node_id, temperature=temperature, timestamp=time)
