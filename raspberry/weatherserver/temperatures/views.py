@@ -87,7 +87,7 @@ def index(request):
     )
     # -*- coding: utf-8 -*-
     last_probe = Probe.objects.order_by('-timestamp')[0]
-    last_measured = "{}°C".format(last_probe.temperature)
+    last_measured = "{:.2f}°C".format(last_probe.temperature)
     last_date = tz_oriented_date(last_probe.timestamp)
     return render(request, 'temperatures/index.html',
                   {'last_measured': last_measured, 'last_date': last_date, 'chart': cht})
