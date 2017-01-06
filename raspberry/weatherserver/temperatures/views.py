@@ -1,8 +1,12 @@
 from datetime import datetime, timedelta
+from itertools import groupby
+from statistics import mean
+
 from chartit import Chart
 from chartit import DataPool
 from django.shortcuts import render
 from django.utils import timezone
+from random import choice
 
 from temperatures.models import Probe
 from weatherserver import settings
@@ -16,12 +20,34 @@ def tz_oriented_date(date):
 
 
 def get_recent_probes(node_id):
-    print("ID IZ")
-    print(node_id)
-    probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1,), node_id=node_id)
-    for probe in probes:
-        print(probe)
+    # print("ID IZ")
+    # print(node_id)
+    probes = Probe.objects.all().filter(timestamp__gte=timezone.now() - timedelta(days=1, ), node_id=node_id).order_by(
+        'timestamp')
+    # for probe in probes:
+    #     print(probe)
     return probes
+
+
+def get_avg_probes(node_id):
+    probes = get_recent_probes(node_id)
+    grouped_probes = groupby(probes, key=lambda probe: (
+        probe.timestamp.hour, probe.timestamp.minute - probe.timestamp.minute % 20))
+
+    grouped_probes = [(key, list(group)) for key, group in grouped_probes]
+
+    timestamps = [probe_group[0].timestamp for _, probe_group in grouped_probes]
+    timestamps = [timestamp.replace(minute=timestamp.minute - timestamp.minute % 20) for timestamp in timestamps]
+    avg_temperatures = [mean(probe.temperature for probe in probe_group) for _, probe_group in grouped_probes]
+    print(timestamps)
+    print(avg_temperatures)
+    chart_probes = [Probe(timestamp=timestamp, temperature=avg_temperature, node_id=node_id) for
+                    (timestamp, avg_temperature) in
+                    zip(timestamps, avg_temperatures)]
+    print(chart_probes)
+
+    print('*' * 60)
+    return chart_probes
 
 
 def index(request):
@@ -45,6 +71,16 @@ def index(request):
                 {
                     'type': 'line',
                     'stacking': False,
+                    # 'dashStyle': 'longdash'
+                    'zones': [{
+                        'value': 19.5,
+                        'color': '#f7a35c'
+                    }, {
+                        'value': 19.6,
+                        'color': '#7cb5ec'
+                    }, {
+                        'color': '#90ed7d'
+                    }]
                 },
             'terms': {'timestamp - ' + str(node_id): ['temperature - ' + str(node_id)] for (node_id,) in nodes}
         }],
@@ -58,7 +94,6 @@ def index(request):
         },
         x_sortf_mapf_mts=(None, tz_oriented_date, False)
     )
-
     # -*- coding: utf-8 -*-
     last_probe = Probe.objects.order_by('-timestamp')[0]
     last_measured = "{}°C".format(last_probe.temperature)
