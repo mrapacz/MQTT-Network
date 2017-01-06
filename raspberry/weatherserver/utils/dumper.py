@@ -10,7 +10,7 @@ def dump_data(node_id, temperature):
     time = time.replace(minute=(time.minute - time.minute % 10), second=0, microsecond=0)
 
     try:
-        p = Probe.objects.get(timestamp=time)
+        p = Probe.objects.get(timestamp=time, node_id=node_id)
         p.temperature = mean(temperature, p.temperature)
         p.save()
     except Probe.DoesNotExist:
